@@ -1,0 +1,1 @@
+C:\wamp\www\lesson\larapus\app/views/authors/show.blade.php

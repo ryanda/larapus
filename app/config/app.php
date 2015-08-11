@@ -122,6 +122,10 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
+		'Zizaco\Entrust\EntrustServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
+		'Chumper\Datatable\DatatableServiceProvider'
+
 	),
 
 	/*
@@ -188,6 +192,10 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
+
+		'Sentry'			=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+		'Datatable'			=> 'Chumper\Datatable\Facades\DatatableFacade',
+		'Entrust'         => 'Zizaco\Entrust\EntrustFacade',
 
 	),
 
