@@ -1,13 +1,7 @@
 <?php
 
-class Author extends \Eloquent {
+class Author extends BaseModel {
 
-	// Add your validation rules here
-	public static $rules = [
-		'name' => 'required|unique:authors'
-	];
-
-	// Don't forget to fill this array
+	public static $rules = [ 'name' => 'required|unique:authors,name,:id' ];
 	protected $fillable = ['name'];
-
 }

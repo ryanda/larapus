@@ -9,7 +9,10 @@ class AuthorsController extends \BaseController {
 			return Datatable::collection($data)
 				->showColumns('id', 'name')
 				->addColumn('', function ($model) {
-					return 'edit | hapus';
+					return '
+					<a href="'.
+					route('admin.authors.edit',['authors'=>$model->id]).
+					'">edit</a> | hapus ';
 				})
 				->searchColumns('name')
 				->orderColumns('name')
@@ -29,7 +32,7 @@ class AuthorsController extends \BaseController {
 		}
 
 		$author = Author::create($data);
-		return Redirect::route('admin.authors.index')->withPesan('Berhasil menyimpan '.$author->name);
+		return Redirect::route('admin.authors.index')->withPesan("Berhasil menyimpan $author->name");
 	}
 
 	public function show($id) {
@@ -39,18 +42,18 @@ class AuthorsController extends \BaseController {
 
 	public function edit($id) {
 		$author = Author::find($id);
-		return View::make('authors.edit', compact('author'));
+		return View::make('authors.edit', compact('author'))->withTitle("Ubah $author->name");
 	}
 
 	public function update($id) {
 		$author = Author::findOrFail($id);
-		$validator = Validator::make($data = Input::all(), Author::$rules);
+		$validator = Validator::make($data = Input::all(), $author->updateRules());
 		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validator)->withInput();
+			return Redirect::back()->withPesan('Terdapat kesalahan validasi')->withInput();
 		}
 
 		$author->update($data);
-		return Redirect::route('authors.index');
+		return Redirect::route('admin.authors.index')->withPesan("Berhasil mengubah $author->name");
 	}
 
 	public function destroy($id) {
