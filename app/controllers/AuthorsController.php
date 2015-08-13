@@ -4,15 +4,18 @@ class AuthorsController extends \BaseController {
 
 	public function index() {
 		$data = Author::all(['id','name']);
-		// return $data;
 		if(Datatable::shouldHandle()) {
 			return Datatable::collection($data)
 				->showColumns('id', 'name')
-				->addColumn('', function ($model) {
-					return '
-					<a href="'.
-					route('admin.authors.edit',['authors'=>$model->id]).
-					'">edit</a> | hapus ';
+				->addColumn('1', function ($model) {
+		$html = '<a href="'.route('admin.authors.edit',$model->id).'" class="btn btnn"> <i class="mdi-editor-mode-edit"></i> </a>';
+					return $html;
+				})
+				->addColumn('2', function ($model) {
+		$html = Form::open(['route'=>['admin.authors.destroy',$model->id],'method'=>'delete']);
+		$html .= '<button class="btn btnn" type="submit"> <i class="mdi-action-delete"></i> </button>';
+		$html .= Form::close();
+					return $html;
 				})
 				->searchColumns('name')
 				->orderColumns('name')
@@ -58,7 +61,7 @@ class AuthorsController extends \BaseController {
 
 	public function destroy($id) {
 		Author::destroy($id);
-		return Redirect::route('authors.index');
+		return Redirect::route('admin.authors.index')->withPesan('Berhasil menghapus penulis');
 	}
 
 }
