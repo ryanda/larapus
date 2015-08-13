@@ -15,59 +15,46 @@ class AuthorsController extends \BaseController {
 				->orderColumns('name')
 				->make();
 		}
-		return View::make('authors.index')->withTitle('Penulis')->withPesan('Authors');
+		return View::make('authors.index')->withTitle('Penulis');
 	}
 
 	public function create() {
-		return View::make('authors.create');
+		return View::make('authors.create')->withTitle('Tambah Penulis');
 	}
 
 	public function store() {
 		$validator = Validator::make($data = Input::all(), Author::$rules);
-
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
+		if ($validator->fails()) {
+			return Redirect::back()->withPesan('Terdapat kesalahan validasi')->withInput();
 		}
 
-		Author::create($data);
-
-		return Redirect::route('authors.index');
+		$author = Author::create($data);
+		return Redirect::route('admin.authors.index')->withPesan('Berhasil menyimpan '.$author->name);
 	}
 
 	public function show($id) {
 		$author = Author::findOrFail($id);
-
 		return View::make('authors.show', compact('author'));
 	}
 
-	public function edit($id)
-	{
+	public function edit($id) {
 		$author = Author::find($id);
-
 		return View::make('authors.edit', compact('author'));
 	}
 
-	public function update($id)
-	{
+	public function update($id) {
 		$author = Author::findOrFail($id);
-
 		$validator = Validator::make($data = Input::all(), Author::$rules);
-
-		if ($validator->fails())
-		{
+		if ($validator->fails()) {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
 		$author->update($data);
-
 		return Redirect::route('authors.index');
 	}
 
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		Author::destroy($id);
-
 		return Redirect::route('authors.index');
 	}
 

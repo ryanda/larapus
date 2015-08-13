@@ -1,6 +1,5 @@
 @extends('layout.admin')
 @section('content')
-	Tambah Author <br>
 	{{	Datatable::table()
 			->addColumn('id', 'nama', '')
 			->setOptions('aoColumnDefs', [
@@ -11,6 +10,7 @@
 			->setOptions('bProcessing', true)
 			->setUrl(route('admin.authors.index'))
 			->render('partial.datatable') }}
+	{{HTML::fab()}}
 @stop
 
 @section('asset')
