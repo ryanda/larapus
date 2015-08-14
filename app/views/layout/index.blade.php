@@ -75,7 +75,9 @@
 		$(document).ready(function() {
 
 		    @if (Session::has('pesan'))
-		        Materialize.toast('{{ Session::get('pesan') }}', 4000);
+			    @foreach(Session::get('pesan') as $get)
+			        Materialize.toast('{{ $get }}', 4000);
+		       	@endforeach
 		    @endif
 			@yield('js')
 

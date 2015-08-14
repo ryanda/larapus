@@ -60,7 +60,10 @@ class AuthorsController extends \BaseController {
 	}
 
 	public function destroy($id) {
-		Author::destroy($id);
+		if (!Author::destroy($id)) {
+			return Redirect::back();			
+		}
+		
 		return Redirect::route('admin.authors.index')->withPesan('Berhasil menghapus penulis');
 	}
 
