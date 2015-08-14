@@ -37,7 +37,18 @@ class BooksController extends \BaseController {
 			return Redirect::back()->withPesan('Terdapat kesalahan validasi')->withInput();
 		}
 
-		$book = Book::create($data);
+		$book = Book::create(Input::except('cover'));
+		if (Input::hasFile('cover')) {
+			$uploaded_cover = Input::file('cover');
+			$extension = $uploaded_cover->getClientOriginalExtension();
+			$filename = md5(time()). '.' .$extension;
+			$destination_path = public_path(). DIRECTORY_SEPARATOR .'img';
+
+			$uploaded_cover->move($destination_path, $filename);
+			$book->cover = $filename;
+			$book->save();
+		}
+
 		return Redirect::route('admin.books.index')->withPesan("Berhasil menyimpan $book->title");
 	}
 
@@ -57,8 +68,32 @@ class BooksController extends \BaseController {
 		if ($validator->fails()) {
 			return Redirect::back()->withPesan('Terdapat kesalahan validasi')->withInput();
 		}
+		if (Input::hasFile('cover')) {
+			$filename = null;
+			$uploaded_cover = Input::file('cover');
+			$extension = $uploaded_cover->getClientOriginalExtension();
+			$filename = md5(time()). '.' .$extension;
+			$destination_path = public_path(). DIRECTORY_SEPARATOR .'img';
+			$uploaded_cover->move($destination_path, $filename);
 
-		$book->update($data);
+			if ($book->cover) {
+				$old_cover = $book->cover;
+				$file_path = public_path(). DIRECTORY_SEPARATOR .'img'. DIRECTORY_SEPARATOR .$old_cover;
+				try {
+					File::delete($file_path);
+				} catch (FileNotFoundException $e) {
+					return Redirect::back()->withPesan('File tidak ditemukan')->withInput();
+				}
+			}
+
+			$book->cover = $filename;
+			$book->save();
+		}
+
+		if (!$book->update(Input::except('cover'))) {
+			return Redirect::back();
+		}
+
 		return Redirect::route('admin.books.index')->withPesan("Berhasil mengubah $book->title");
 	}
 

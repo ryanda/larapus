@@ -2,7 +2,7 @@
 @section('content')
 	<div class="row">
 		<div class="col s4 offset-s4">
-			{{Form::model($book, ['route'=>['admin.books.update', $book->id], 'method'=>'put'])}}
+			{{Form::model($book, ['route'=>['admin.books.update', $book->id], 'method'=>'put', 'files' => 'true'])}}
 				@include('books._form')
 			{{Form::close()}}
 		</div>

@@ -3,11 +3,6 @@
 	{{Form::Mlabel('title', 'Judul Buku')}}
 	{{Form::Mtext('title')}}
 </div>
-{{-- <div class="input-field">
-	{{HTML::Micon('mdi-social-person')}}
-	{{Form::Mlabel('author_id', 'Penulis')}}
-	{{Form::select('author_id', [''=>'']+Author::lists('name','id'), null, ['id'=>'author_id','placeholder'=>'Pilih Penulis'])}}
-</div> --}}
 <div class="input-field">
 	{{Form::select('author_id', [''=>'Pilih Penulis']+Author::lists('name','id'), null)}}
 </div>
@@ -16,7 +11,18 @@
 	{{Form::Mlabel('amount', 'Jumlah')}}
 	{{Form::Mtext('amount')}}
 </div>
-{{-- {{HTML::divider()}} --}}
+<div class="input-field file-field">
+	{{Form::text(null, null, ['class'=>'file-path validate'])}}
+      <div class="btn">
+        <span> file </span>
+        {{Form::file('cover')}}
+      </div>
+</div>
+@if (isset($book) && $book->cover )
+	<div class="input-field">
+		{{HTML::image(asset('img/'.$book->cover), null, ['class' => 'responsive-img'])}}
+	</div>
+@endif
 {{Form::Msubmit('Simpan')}}
 {{HTML::fab('index','mdi-content-reply')}}
 @section('js')
