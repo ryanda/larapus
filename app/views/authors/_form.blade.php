@@ -1,5 +1,5 @@
 <div class="input-field">
-	{{HTML::Micon('mdi-action-account-circle')}}
+	{{HTML::Micon('mdi-social-person')}}
 	{{Form::Mlabel('name', 'Nama Penulis')}}
 	{{Form::Mtext('name')}}
 </div>

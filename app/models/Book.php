@@ -1,9 +1,13 @@
 <?php
 
-class Book extends \Eloquent {
+class Book extends BaseModel {
 
-	public static $rules = [];
-	protected $fillable = [];
+	public static $rules = [
+		'title' => 'required|unique:books,title,:id',
+		'author_id' => 'required|exists:authors,id',
+		'amount' => 'numeric'
+	];
+	protected $fillable = ['title', 'author_id', 'amount'];
 
 	public function author() {
 		return $this->belongsTo('Author');

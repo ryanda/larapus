@@ -10,7 +10,7 @@
 @stop
 
 @section('breadcrumb') 
- 	Dashboard / <a href="{{route('admin.authors.index')}}"> Penulis </a> / {{$title}}
+ 	Dashboard / <a href="{{route('admin.authors.index')}}"> Buku </a> / {{$title}}
 @stop
 @section('head') 
 	{{$title}} | Dashboard

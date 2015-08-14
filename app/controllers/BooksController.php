@@ -5,7 +5,7 @@ class BooksController extends \BaseController {
 	public function index()
 	{
 		if(Datatable::shouldHandle()) {
-			return Datatable::collection(Book::with('author')->get())
+			return Datatable::collection(Book::with('author')->orderBy('id','desc')->get())
 				->showColumns('id', 'title', 'amount')
 				->addColumn('author', function($model) {
 					return $model->author->name;
@@ -28,18 +28,17 @@ class BooksController extends \BaseController {
 	}
 
 	public function create() {
-		return View::make('books.create');
+		return View::make('books.create')->withTitle('Tambah Buku');
 	}
 
 	public function store() {
 		$validator = Validator::make($data = Input::all(), Book::$rules);
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
+		if ($validator->fails()) {
+			return Redirect::back()->withPesan('Terdapat kesalahan validasi')->withInput();
 		}
 
-		Book::create($data);
-		return Redirect::route('books.index');
+		$book = Book::create($data);
+		return Redirect::route('admin.books.index')->withPesan("Berhasil menyimpan $book->title");
 	}
 
 	public function show($id) {
