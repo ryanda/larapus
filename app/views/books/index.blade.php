@@ -1,15 +1,17 @@
 @extends('layout.admin')
 @section('content')
 	{{	Datatable::table()
-			->addColumn('id', 'nama', '1', '2')
+			->addColumn('id', 'title', 'amount', 'author', '1', '2')
 			->setOptions('aoColumnDefs', [
 				['bVisible' => false, 'aTargets' => [0]],
-				['sTitle' => 'Nama', 'aTargets' => [1]],
-				['bSortable' => false, 'aTargets' => [2], 'sTitle'=>'Edit'],
-				['bSortable' => false, 'aTargets' => [3], 'sTitle'=>'Hapus']
+				['sTitle' => 'Judul', 'aTargets' => [1]],
+				['sTitle' => 'Jumlah', 'aTargets' => [2]],
+				['sTitle' => 'Penulis', 'aTargets' => [3]],
+				['bSortable' => false, 'aTargets' => [4], 'sTitle'=>'Edit'],
+				['bSortable' => false, 'aTargets' => [5], 'sTitle'=>'Hapus']
 			])
 			->setOptions('bProcessing', true)
-			->setUrl(route('admin.authors.index'))
+			->setUrl(route('admin.books.index'))
 			->render('partial._templatedatatable') }}
 	{{HTML::fab()}}
 @stop

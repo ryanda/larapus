@@ -12,6 +12,7 @@ Route::group(['before' => 'auth', 'prefix' => 'admin'], function() {
 		'as' => 'admin',
 		'uses' => 'HomeController@index' ]);
 	Route::resource('authors', 'AuthorsController');
+	Route::resource('books', 'BooksController');
 });
 
 // user
