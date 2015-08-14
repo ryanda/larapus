@@ -48,24 +48,23 @@ class BooksController extends \BaseController {
 
 	public function edit($id) {
 		$book = Book::find($id);
-		return View::make('books.edit', compact('book'));
+		return View::make('books.edit', compact('book'))->withTitle("Ubah $book->title");
 	}
 
 	public function update($id) {
 		$book = Book::findOrFail($id);
-		$validator = Validator::make($data = Input::all(), Book::$rules);
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
+		$validator = Validator::make($data = Input::all(), $book->updateRules());
+		if ($validator->fails()) {
+			return Redirect::back()->withPesan('Terdapat kesalahan validasi')->withInput();
 		}
 
 		$book->update($data);
-		return Redirect::route('books.index');
+		return Redirect::route('admin.books.index')->withPesan("Berhasil mengubah $book->title");
 	}
 
 	public function destroy($id) {
 		Book::destroy($id);
-		return Redirect::route('books.index');
+		return Redirect::route('admin.books.index')->withPesan('Berhasil menghapus buku');
 	}
 
 }

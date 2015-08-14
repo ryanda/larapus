@@ -9,7 +9,7 @@
 	{{Form::select('author_id', [''=>'']+Author::lists('name','id'), null, ['id'=>'author_id','placeholder'=>'Pilih Penulis'])}}
 </div> --}}
 <div class="input-field">
-	{{Form::select('author_id', [''=>'Pilih Penulis']+Author::lists('name','id'), 0)}}
+	{{Form::select('author_id', [''=>'Pilih Penulis']+Author::lists('name','id'), null)}}
 </div>
 <div class="input-field">
 	{{HTML::Micon('mdi-action-dns')}}

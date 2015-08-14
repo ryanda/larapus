@@ -15,6 +15,3 @@
 @section('head') 
 	{{$title}} | Dashboard
 @stop
-@section('asset')
-	@include('partial.select2')
-@stop
