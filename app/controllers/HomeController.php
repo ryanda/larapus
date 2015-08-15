@@ -7,6 +7,10 @@ class HomeController extends BaseController {
 	}
 
 	public function login() {
+		if (Auth::check()) {
+			Session::reflash();
+			return Redirect::to('admin');
+		}
 		return View::make('login')->withTitle('Login');
 	}
 
@@ -37,7 +41,7 @@ class HomeController extends BaseController {
 			return Redirect::back()->withPesan('Terdapat kesalahan');
 		}
 	  	Auth::logout();
-		return Redirect::to('login')->withPesan('Berhasil logout');
+		return Redirect::to('/')->withPesan('Berhasil logout');
 	}
 
 }

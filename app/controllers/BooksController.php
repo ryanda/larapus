@@ -2,6 +2,10 @@
 
 class BooksController extends \BaseController {
 
+	public function __construct() {
+		$this->beforeFilter('user', ['only'=>['borrow']]);
+	}
+
 	public function borrow($id) {
 		$book = Book::findOrFail($id);
 		$book->borrow();
