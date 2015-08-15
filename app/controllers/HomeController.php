@@ -2,8 +2,17 @@
 
 class HomeController extends BaseController {
 
-	public function index() {
-		return View::make('admin.index')->withTitle('Dashboard');
+	public function dashboard() {
+		$user = Auth::user();
+
+		if ($user->hasRole('Admin')) {
+			return View::make('admin.index')->withTitle('Dashboard Admin');
+		}
+		if ($user->hasRole('User')) {
+			return View::make('user.index')
+				->withTitle('Dashboard User')
+				->withBooks($user->books()->wherePivot('returned', 0)->get());
+		}
 	}
 
 	public function login() {

@@ -3,7 +3,7 @@
 	@yield('content')
 @stop
 @section('head')
-Admin Dashboard
+Dashboard
 @stop
 @section('nav')
 	@yield('nava')

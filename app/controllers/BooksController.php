@@ -17,6 +17,12 @@ class BooksController extends \BaseController {
 		return Redirect::back()->withPesan("Anda telah meminjam $book->title");
 	}
 
+	public function returnBack($id) {
+		$book = Book::findOrFail($id);
+		$book->returnBack();
+		return Redirect::back()->withPesan("Anda telah mengembalikan $book->title");
+	}
+
 	public function index() {
 		if(Datatable::shouldHandle()) {
 			return Datatable::collection(Book::with('author')->orderBy('id','desc')->get())

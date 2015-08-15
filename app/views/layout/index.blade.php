@@ -79,7 +79,7 @@
 				    @foreach(Session::get('pesan') as $get)
 				        Materialize.toast('{{ $get }}', 2000);
 			       	@endforeach
-			    @else (Session::has('pesan'))
+			    @else
 			        Materialize.toast(' {{Session::get('pesan')}} ', 4000);
 			    @endif
 			@endif
