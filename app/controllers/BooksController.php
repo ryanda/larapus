@@ -8,7 +8,12 @@ class BooksController extends \BaseController {
 
 	public function borrow($id) {
 		$book = Book::findOrFail($id);
-		$book->borrow();
+		try {
+			$book->borrow();
+		} catch (BookAlreadyBorrowedException $e) {
+			return Redirect::back()->withPesan($e->getMessage());
+		}
+
 		return Redirect::back()->withPesan("Anda telah meminjam $book->title");
 	}
 

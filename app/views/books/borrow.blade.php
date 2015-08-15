@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('content')
-	@include('books._borrowList')
+	@include('books._borrow')
 @stop
 
 @section('asset')

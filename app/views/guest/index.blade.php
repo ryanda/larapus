@@ -1,7 +1,7 @@
 @extends('layout.guest')
 @section('content')
 	<h1>{{$title}}</h1>
-	@include('books._borrowList')
+	@include('books._borrow')
 @stop
 
 @section('asset')
