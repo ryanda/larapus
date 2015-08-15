@@ -13,4 +13,13 @@ class Book extends BaseModel {
 	public function author() {
 		return $this->belongsTo('Author');
 	}
+
+	public function users() {
+		return $this->belongsToMany('User')->withPivot('returned')->withTimestamps();
+	}
+
+	public function borrow() {
+		$user = Auth::user();
+		return $this->users()->attach($user);
+	}
 }

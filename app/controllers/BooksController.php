@@ -2,8 +2,13 @@
 
 class BooksController extends \BaseController {
 
-	public function index()
-	{
+	public function borrow($id) {
+		$book = Book::findOrFail($id);
+		$book->borrow();
+		return Redirect::back()->withPesan("Anda telah meminjam $book->title");
+	}
+
+	public function index() {
 		if(Datatable::shouldHandle()) {
 			return Datatable::collection(Book::with('author')->orderBy('id','desc')->get())
 				->showColumns('id', 'title', 'amount')

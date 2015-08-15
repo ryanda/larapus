@@ -74,11 +74,15 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 
-		    @if (Session::has('pesan'))
-			    @foreach(Session::get('pesan') as $get)
-			        Materialize.toast('{{ $get }}', 4000);
-		       	@endforeach
-		    @endif
+			@if (Session::has('pesan'))
+			    @if (is_array(Session::get('pesan')))
+				    @foreach(Session::get('pesan') as $get)
+				        Materialize.toast('{{ $get }}', 2000);
+			       	@endforeach
+			    @else (Session::has('pesan'))
+			        Materialize.toast(' {{Session::get('pesan')}} ', 4000);
+			    @endif
+			@endif
 			@yield('js')
 
 		});
