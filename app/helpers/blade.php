@@ -23,6 +23,19 @@ Form::macro('Msubmit', function($title) {
     </button> ';
 });
 
+HTML::macro('actNav',function($url, $title, $icon =null) {
+	$class = '';
+	if ($url == Request::url()) {
+		$class = 'active';
+	}
+	if ($icon) {
+		$logo = '<i class="'.$icon.' left"></i>';
+	} else {
+		$logo = '';
+	}
+	return '<li class="'.$class.'"><a href="'.$url.'">'.$logo.' '.$title.'</a></li>';
+});
+
 HTML::macro('fab', function($route=null, $logo=null, $path=null) {
 	if ($logo) {
 		$icon = $logo;

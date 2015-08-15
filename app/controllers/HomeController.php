@@ -11,6 +11,7 @@ class HomeController extends BaseController {
 		if ($user->hasRole('User')) {
 			return View::make('user.index')
 				->withTitle('Dashboard User')
+				->withLastlogin($user->last_login->diffForHumans())
 				->withBooks($user->books()->wherePivot('returned', 0)->get());
 		}
 	}
@@ -42,6 +43,9 @@ class HomeController extends BaseController {
         if(!Auth::attempt( ['username' => $input['username'], 'password' => $input['password'] ] )) {
         	return Redirect::back()->withPesan('Username /Password salah')->withInput();
         }
+        $user = Auth::user();
+        $user->last_login = new DateTime;
+        $user->save();
         return Redirect::to('admin')->withPesan('Anda berhasil login');
 	}
 
