@@ -11,6 +11,31 @@ class Book extends BaseModel {
 	protected $fillable = ['title', 'author_id', 'amount'];
 	protected $appends = ['stock'];
 
+	public static function boot() {
+		parent::boot();
+
+		self::updating(function($book) {
+			$borrowed = DB::table('book_user')
+				->where('book_id', $book->id)
+				->where('returned', 0)
+				->count();
+			if ($book->amount < $borrowed) {
+				Session::flash('pesan', "Jumlah buku $book->title harus >= $borrowed");
+				return false;
+			}
+		});
+		self::deleting(function($book) {
+			$borrowed = DB::table('book_user')
+				->where('book_id', $book->id)
+				->where('returned', 0)
+				->count();
+			if ($borrowed > 0) {
+				Session::flash('pesan', "Buku $book->title masih dipinjam");
+				return false;
+			}
+		});
+	}
+
 	public function author() {
 		return $this->belongsTo('Author');
 	}

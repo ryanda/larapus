@@ -110,7 +110,8 @@ class BooksController extends \BaseController {
 			$book->save();
 		}
 
-		if (!$book->update(Input::except('cover'))) {
+		// if (!$book->update(Input::except('cover'))) {
+		if (!$book->update($data)) {
 			return Redirect::back();
 		}
 
@@ -118,7 +119,9 @@ class BooksController extends \BaseController {
 	}
 
 	public function destroy($id) {
-		Book::destroy($id);
+		if (!Book::destroy($id)) {
+			return Redirect::back();
+		}
 		return Redirect::route('admin.books.index')->withPesan('Berhasil menghapus buku');
 	}
 
