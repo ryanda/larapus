@@ -1,12 +1,13 @@
 {{	
 	Datatable::table()
-		->addColumn('id', 'title', 'amount', 'author', 'borrow')
+		->addColumn('id', 'title', 'amount', 'stock', 'author', 'borrow')
 		->setOptions('aoColumnDefs', [
 			['bVisible' => false, 'aTargets' => [0]],
 			['sTitle' => 'Judul', 'aTargets' => [1]],
-			['sTitle' => 'Penulis', 'aTargets' => [2]],
-			['sTitle' => 'Jumlah', 'aTargets' => [3]],
-			['bSortable' => false, 'aTargets' => [4], 'sTitle'=>'Borrow'],
+			['sTitle' => 'Jumlah', 'aTargets' => [2]],
+			['sTitle' => 'Stok', 'aTargets' => [3], 'bSortable' => false],
+			['sTitle' => 'Penulis', 'aTargets' => [4]],
+			['sTitle' => 'Borrow', 'aTargets' => [5], 'bSortable' => false],
 		])
 		->setOptions('bProcessing', true)
 		->setUrl(route('list.borrow'))

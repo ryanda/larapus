@@ -9,6 +9,7 @@ class Book extends BaseModel {
 		'cover' => 'image|max:2048'
 	];
 	protected $fillable = ['title', 'author_id', 'amount'];
+	protected $appends = ['stock'];
 
 	public function author() {
 		return $this->belongsTo('Author');
@@ -40,5 +41,14 @@ class Book extends BaseModel {
 				'returned'=>1, 
 				'updated_at'=>$this->freshTimestamp()
 			]);
+	}
+
+	public function getStockAttribute() {
+		$borrowed = DB::table('book_user')
+			->where('book_id', $this->id)
+			->where('returned', 0)
+			->count();
+		$stock = $this->amount - $borrowed;
+		return $stock;
 	}
 }

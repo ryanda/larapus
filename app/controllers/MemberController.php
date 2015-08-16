@@ -4,7 +4,7 @@ class MemberController extends \BaseController {
 	public function books() {
 		if(Datatable::shouldHandle()) {
 			return Datatable::collection(Book::with('author')->orderBy('id','desc')->get())
-				->showColumns('id', 'title', 'amount')
+				->showColumns('id', 'title', 'amount', 'stock')
 				->addColumn('author', function($model) {
 					return $model->author->name;
 				})
@@ -22,7 +22,7 @@ class MemberController extends \BaseController {
 	public function borrowList() {
 		if(Datatable::shouldHandle()) {
 			return Datatable::collection(Book::with('author')->orderBy('id','desc')->get())
-				->showColumns('id', 'title', 'amount')
+				->showColumns('id', 'title', 'amount', 'stock')
 				->addColumn('author', function($model) {
 					return $model->author->name;
 				})
