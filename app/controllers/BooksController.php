@@ -10,7 +10,7 @@ class BooksController extends \BaseController {
 		$book = Book::findOrFail($id);
 		try {
 			$book->borrow();
-		} catch (BookAlreadyBorrowedException $e) {
+		} catch (BookException $e) {
 			return Redirect::back()->withPesan($e->getMessage());
 		}
 
